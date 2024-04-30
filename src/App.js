@@ -14,7 +14,7 @@ function App() {
       gap:"1rem",
       alignItems:"flex-start",
     }}>
-      <BudgetCard name="Entertaiment" amount={200} max={100}>
+      <BudgetCard name="Entertainment" gray amount={200} max={100}>
 
       </BudgetCard>
 

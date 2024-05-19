@@ -2,7 +2,15 @@ import { Card, Stack, Button } from "react-bootstrap/esm";
 import { currencyFormatter } from "../utils";
 import { ProgressBar } from "react-bootstrap";
 
-export default function BudgetCard({ name, amount, max, gray }) {
+export default function BudgetCard({
+  name,
+  amount,
+  max,
+  gray,
+  onAddExpenseClick,
+  hideButtons,
+  onViewExpensesClick
+}) {
   const classNames = [];
   if (amount > max) {
     classNames.push("bg-danger", "bg-opacity-10");
@@ -16,26 +24,31 @@ export default function BudgetCard({ name, amount, max, gray }) {
           <Card.Title className="d-flex justify-content-between align-items-baseline fw-normal mb-3">
             <div className="me-2">{name}</div>
             <div className="d-flex align-items-baseline">
-              {currencyFormatter.format(amount)}{" "}
-              <span className="text-muted fs-6 ms-1">
-                {" "}
-                /{currencyFormatter.format(max)}
-              </span>
+              {currencyFormatter.format(amount)}
+              {max && (
+                <span className="text-muted fs-6 ms-1">
+                  /{currencyFormatter.format(max)}
+                </span>
+              )}
             </div>
           </Card.Title>
-          <ProgressBar
+          { max && (<ProgressBar
             className="rounded-pill"
             variant={getProgressBarVariant(amount, max)}
             min={0}
             max={max}
             now={amount}
-          ></ProgressBar>
-          <Stack direction="horizontal" gap="2" className="mt-4">
-            <Button variant="outline-primary" className="ms-auto">
+          ></ProgressBar>)}
+          {!hideButtons && (<Stack direction="horizontal" gap="2" className="mt-4">
+            <Button
+              variant="outline-primary"
+              className="ms-auto"
+              onClick={onAddExpenseClick}
+            >
               Add Expenses
             </Button>
-            <Button variant="outline-secondary">View Expenses</Button>
-          </Stack>
+            <Button onClick={onViewExpensesClick} variant="outline-secondary">View Expenses</Button>
+          </Stack>)}
         </Card.Body>
       </Card>
     </div>
